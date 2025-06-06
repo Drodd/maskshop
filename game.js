@@ -36,7 +36,7 @@ class MaskSellerGame {
                 entrance: "同学们都不太愿意跟我说话，是不是我不够优秀...", // 基于need（独立自信）的困扰
                 correctMask: "love",
                 positiveResponse: "我要拿到全班第一！", // 基于want（群体认同）的满足
-                negativeResponse: "这个...好像不能让我更受欢迎..."
+                negativeResponse: "这个...真的有用么..."
             },
             {
                 // 爱-归属感类型 - 渴望融入团队的职场新人
@@ -51,7 +51,7 @@ class MaskSellerGame {
                 entrance: "午饭时间大家聊天我总是插不上话，我是不是不够有趣...", // 基于need（独立自信）的困扰
                 correctMask: "love",
                 positiveResponse: "我要成为派对焦点！", // 基于want（职场融入）的满足
-                negativeResponse: "这个...好像不能让我更受同事欢迎..."
+                negativeResponse: "这感觉...没有任何感觉..."
             },
             {
                 // 爱-安全感类型 - 渴望稳定关系的恋爱焦虑者
@@ -66,7 +66,7 @@ class MaskSellerGame {
                 entrance: "男朋友回信息总不及时，他似乎不太爱我...", // 基于need（情感独立）的恐惧
                 correctMask: "love",
                 positiveResponse: "我要吸引更多追求者！", // 基于want（关系保障）的沉醉
-                negativeResponse: "这个...不能给我安全感..."
+                negativeResponse: "这是...什么玩意..."
             },
             {
                 // 爱-安全感类型 - 渴望工作稳定的职场焦虑者
@@ -81,7 +81,7 @@ class MaskSellerGame {
                 entrance: "公司最近在裁员，我总觉得下一个就是我...", // 基于need（情感独立）的恐惧
                 correctMask: "love",
                 positiveResponse: "我要成为老板的心腹！", // 基于want（职业保障）的沉醉
-                negativeResponse: "这个...不能给我工作保障..."
+                negativeResponse: "这个...真的有用么..."
             },
             {
                 // 爱-安全感类型 - 渴望财务安全的理财焦虑者
@@ -96,7 +96,7 @@ class MaskSellerGame {
                 entrance: "银行余额每天都在减少，我会不会变成穷光蛋...", // 基于need（情感独立）的恐惧
                 correctMask: "love",
                 positiveResponse: "我要不择手段的搞钱！", // 基于want（财务保障）的沉醉
-                negativeResponse: "这个...不能保障我的财务安全..."
+                negativeResponse: "这感觉...没有任何感觉..."
             },
             {
                 // 虚荣-成就类型 - 渴望功名的职场精英
@@ -111,7 +111,7 @@ class MaskSellerGame {
                 entrance: "为什么老板给他的朋友圈点赞，却从来不理我...", // 基于need（内在价值）的痛苦
                 correctMask: "honor",
                 positiveResponse: "我要住在公司！", // 基于want（外在成就）的陶醉
-                negativeResponse: "这个面具...似乎不能提升我的成就..."
+                negativeResponse: "这个...真的有用么..."
             },
             {
                 // 虚荣-成就类型 - 渴望商业成功的创业者
@@ -126,7 +126,7 @@ class MaskSellerGame {
                 entrance: "投资人又拒绝了我，是不是我的项目不够好...", // 基于need（内在价值）的痛苦
                 correctMask: "honor",
                 positiveResponse: "我要成为商界传奇！", // 基于want（商业辉煌）的陶醉
-                negativeResponse: "这个面具...似乎不能让我成功..."
+                negativeResponse: "这感觉...没有任何感觉..."
             },
             {
                 // 虚荣-成就类型 - 渴望艺术成功的艺术家
@@ -141,7 +141,7 @@ class MaskSellerGame {
                 entrance: "我的作品总是没人欣赏，是不是我没有天赋...", // 基于need（内在价值）的痛苦
                 correctMask: "honor",
                 positiveResponse: "我要超越达·芬奇！", // 基于want（艺术名声）的陶醉
-                negativeResponse: "这个面具...似乎不能让我出名..."
+                negativeResponse: "这个...真的有用么..."
             },
             {
                 // 虚荣-成就类型 - 渴望体育成功的运动员
@@ -156,7 +156,7 @@ class MaskSellerGame {
                 entrance: "教练说我不够努力，是不是我真的不适合这项运动...", // 基于need（内在价值）的痛苦
                 correctMask: "honor",
                 positiveResponse: "我要拿下世界杯！", // 基于want（体育荣耀）的陶醉
-                negativeResponse: "这个面具...似乎不能让我获胜..."
+                negativeResponse: "这是...什么玩意..."
             },
             {
                 // 虚荣-尊严类型 - 渴望完美形象的网红
@@ -171,7 +171,7 @@ class MaskSellerGame {
                 entrance: "上次直播忘开美颜了，我的粉丝正在流失...", // 基于need（真实接纳）的疲惫
                 correctMask: "honor",
                 positiveResponse: "我要去韩国整容！", // 基于want（完美形象）的满足
-                negativeResponse: "这个面具...好像不能让我更完美..."
+                negativeResponse: "这是...什么玩意..."
             },
             {
                 // 虚荣-尊严类型 - 渴望维持面子的家长
@@ -186,7 +186,7 @@ class MaskSellerGame {
                 entrance: "其他家长都在炫耀孩子，我家孩子成绩不够好...", // 基于need（真实接纳）的疲惫
                 correctMask: "honor",
                 positiveResponse: "我要让孩子考上清北！", // 基于want（家庭面子）的满足
-                negativeResponse: "这个面具...好像不能让我更有面子..."
+                negativeResponse: "这感觉...没有任何感觉..."
             },
             {
                 // 虚荣-尊严类型 - 渴望权威形象的中层管理
@@ -201,7 +201,7 @@ class MaskSellerGame {
                 entrance: "下属们背后议论我不够专业...", // 基于need（真实接纳）的疲惫
                 correctMask: "honor",
                 positiveResponse: "我要出书！", // 基于want（管理威严）的满足
-                negativeResponse: "这个面具...好像不能让我更权威..."
+                negativeResponse: "这个...好像没什么用..."
             },
             {
                 // 虚荣-尊严类型 - 渴望维持体面的中年人
@@ -216,7 +216,7 @@ class MaskSellerGame {
                 entrance: "朋友们都混得比我好，聚会时我总觉得抬不起头...", // 基于need（真实接纳）的疲惫
                 correctMask: "honor",
                 positiveResponse: "我要贷款买法拉利！", // 基于want（中年体面）的满足
-                negativeResponse: "这个面具...好像不能让我更体面..."
+                negativeResponse: "这是...什么玩意..."
             },
             {
                 // 控制-意义感类型 - 渴望人生意义的迷茫青年
@@ -231,7 +231,7 @@ class MaskSellerGame {
                 entrance: "感觉人生毫无意义，我需要找到真正重要的事情...", // 基于need（当下意义）的困惑
                 correctMask: "control",
                 positiveResponse: "我要改变世界！", // 基于want（终极意义）的兴奋
-                negativeResponse: "这个面具...好像不能给我人生意义..."
+                negativeResponse: "这个...真的有用么..."
             },
             {
                 // 控制-意义感类型 - 渴望传承价值的文化守护者
@@ -246,7 +246,7 @@ class MaskSellerGame {
                 entrance: "现代人太浮躁，我要保护这些珍贵的传统...", // 基于need（当下意义）的困惑
                 correctMask: "control",
                 positiveResponse: "我要复兴古代文明！", // 基于want（文化传承）的兴奋
-                negativeResponse: "这个面具...好像不能给我使命感..."
+                negativeResponse: "这感觉...没有任何感觉..."
             },
             {
                 // 控制-权力类型 - 渴望控制的小组长
@@ -261,7 +261,7 @@ class MaskSellerGame {
                 entrance: "组员们总是不按我的计划执行，他们是不是看不起我...", // 基于need（服务领导）的挫败
                 correctMask: "control",
                 positiveResponse: "我要自己当老板！", // 基于want（团队控制）的满足
-                negativeResponse: "这个面具...好像不能给我控制力..."
+                negativeResponse: "这个...真的有用么..."
             },
             {
                 // 控制-权力类型 - 渴望管理权的部门主管
@@ -276,7 +276,7 @@ class MaskSellerGame {
                 entrance: "上级总是绕过我直接安排工作，我的权威在哪里...", // 基于need（服务领导）的挫败
                 correctMask: "control",
                 positiveResponse: "我要成为他的上级！", // 基于want（管理扩张）的满足
-                negativeResponse: "这个面具...好像不能给我权威..."
+                negativeResponse: "这是...什么玩意..."
             }
         ];
         
