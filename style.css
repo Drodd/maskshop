@@ -118,7 +118,7 @@ body {
 .foreground-table {
     position: absolute;
     left: 50%;
-    bottom: 67%;
+    bottom: 65%;
     transform: translateX(-50%) translateY(50%);
     
     /* 计算桌子图片的尺寸以匹配背景图片的显示区域 */
@@ -210,7 +210,7 @@ body {
 /* 对话区域 - 移动到人物头顶 */
 .dialogue-area {
     position: absolute;
-    top: 20%;
+    top: 30%; /* 从20%下移10%到30% */
     left: 50%;
     transform: translate(-50%, -80%); /* 调整到人物头顶位置 */
     width: 80%;
@@ -653,9 +653,7 @@ body {
     }
     
     .dialogue-area {
-        width: 90%;
-        max-width: 300px;
-        transform: translate(-50%, -90%);
+        transform: translate(-50%, -70%); /* 稍微调整，使其在小屏幕上不会太低 */
     }
     
     .speech-bubble {
@@ -758,7 +756,7 @@ body {
     }
     
     .dialogue-area {
-        transform: translate(-50%, -70%);
+        transform: translate(-50%, -70%); /* 稍微调整，使其在小屏幕上不会太低 */
     }
     
     .mask-hint {
@@ -778,7 +776,7 @@ body {
     }
     
     .game-intro {
-        top: 25%; /* 从45%上移20%到25% */
+        top: 40%; /* 从45%上移20%到25% */
     }
     
     .game-title {
@@ -862,7 +860,7 @@ body {
 .masks-container {
     position: absolute;
     /* 基于背景图片底部定位 */
-    bottom: 65%;
+    bottom: 60%;
     left: 50%;
     transform: translateX(-50%) translateY(50%);
     
@@ -1068,7 +1066,7 @@ body {
 /* 游戏介绍界面 */
 .game-intro {
     position: absolute;
-    top: 30%; /* 从50%上移20%到30% */
+    top: 40%; /* 从50%上移20%到30% */
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
