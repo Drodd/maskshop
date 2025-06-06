@@ -179,7 +179,9 @@ body {
     top: 17%;
     left: 50%;
     transform: translateX(-50%);
-    width: 106px; /* 面具放大10%：96px * 1.1 = 105.6px ≈ 106px */
+    width: 23.5vh; /* 相对于人物高度的比例：106px / 45vh ≈ 23.5% */
+    max-width: 106px; /* 保持最大尺寸限制 */
+    min-width: 80px; /* 设置最小尺寸避免过小 */
     height: auto;
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
@@ -613,6 +615,13 @@ body {
         min-height: 150px;
     }
     
+    /* 面具尺寸跟随人物缩放 */
+    .face-mask {
+        width: 18.3vh; /* 相对于35vh人物高度的比例：106px / 35vh ≈ 18.3% */
+        max-width: 84px; /* 对应小屏幕的最大尺寸 */
+        min-width: 64px; /* 调整最小尺寸 */
+    }
+    
     .masks-container {
         margin-bottom: calc(-1 * min(100vh, 100vw * 1536 / 1024) / 2 + 15px);
         gap: 30px;
@@ -735,6 +744,13 @@ body {
     .character-image {
         height: 30vh;
         min-height: 120px;
+    }
+    
+    /* 面具尺寸跟随人物缩放 */
+    .face-mask {
+        width: 15.7vh; /* 相对于30vh人物高度的比例：106px / 30vh ≈ 15.7% */
+        max-width: 70px; /* 对应小屏幕的最大尺寸 */
+        min-width: 56px; /* 调整最小尺寸 */
     }
     
     .masks-container {
@@ -904,6 +920,7 @@ body {
 /* 第一个面具（爱之假面）- 位置较高 */
 .mask-item:nth-child(1) {
     top: -15px;
+    left: 5%;
 }
 
 /* 第二个面具（荣誉假面）- 位置较低 */
@@ -914,6 +931,7 @@ body {
 /* 第三个面具（自由假面）- 位置较高 */
 .mask-item:nth-child(3) {
     top: -15px;
+    right: 5%;
 }
 
 .mask-item:hover {
