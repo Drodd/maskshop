@@ -19,6 +19,46 @@ class MaskSellerGame {
         this.startPos = { x: 0, y: 0 };
         this.initialPos = { x: 0, y: 0 };
         
+        // 恶魔称谓评价系统 - 基于满足客人数量的阶梯评价
+        this.demonTitles = [
+            {
+                minSuccess: 0,
+                maxSuccess: 2,
+                title: "凡俗学徒",
+                description: "你的力量还很微弱，假面的真正奥秘对你来说仍是迷雾"
+            },
+            {
+                minSuccess: 3,
+                maxSuccess: 5,
+                title: "欲望探寻者",
+                description: "你开始感知到人心深处的渴望，但还需要更多的修炼"
+            },
+            {
+                minSuccess: 6,
+                maxSuccess: 8,
+                title: "诱惑低语者",
+                description: "你的声音能够触动灵魂的弱点，令人沉醉于虚假的力量"
+            },
+            {
+                minSuccess: 9,
+                maxSuccess: 11,
+                title: "堕落引导者",
+                description: "你精通操纵人心的艺术，让无数人带上了欲望的假面"
+            },
+            {
+                minSuccess: 12,
+                maxSuccess: 14,
+                title: "暗影主宰",
+                description: "你已成为黑暗中的君王，无人能够抗拒你编织的幻象"
+            },
+            {
+                minSuccess: 15,
+                maxSuccess: 99,
+                title: "欲望魔王",
+                description: "你是欲望的化身，众生的贪念皆为你所操控，世界在你的假面下沉沦"
+            }
+        ];
+        
         // 客人数据：遵循desire = want + need的故事原则
         // 每个角色都有表面的want和深层的need，以及因缺少need而产生的flaw
         // entrance基于need设计，positiveResponse基于want设计，体现假面具的隐喻
@@ -303,7 +343,8 @@ class MaskSellerGame {
             restartBtn: document.getElementById('restart-btn'),
             successCount: document.getElementById('success-count'),
             totalServed: document.getElementById('total-served'),
-            accuracyRate: document.getElementById('accuracy-rate'),
+            demonTitle: document.getElementById('demon-title'),
+            titleDescription: document.getElementById('title-description'),
             characterContainer: document.querySelector('.character-container'),
             characterImage: document.querySelector('.character-image')
         };
@@ -702,13 +743,15 @@ class MaskSellerGame {
         // 显示结果界面
         this.elements.resultScreen.style.display = 'flex';
         
-        // 更新结果统计
-        const accuracy = this.servedCustomers > 0 ? 
-            Math.round((this.successfulCustomers.length / this.servedCustomers) * 100) : 0;
+        // 获取恶魔称谓
+        const successCount = this.successfulCustomers.length;
+        const demonTitle = this.getDemonTitle(successCount);
         
-        this.elements.successCount.textContent = this.successfulCustomers.length;
+        // 更新结果统计
+        this.elements.successCount.textContent = successCount;
         this.elements.totalServed.textContent = this.servedCustomers;
-        this.elements.accuracyRate.textContent = accuracy + '%';
+        this.elements.demonTitle.textContent = demonTitle.title;
+        this.elements.titleDescription.textContent = demonTitle.description;
     }
     
     restartGame() {
@@ -818,6 +861,18 @@ class MaskSellerGame {
         this.availableCustomers.splice(randomIndex, 1);
         
         return customer;
+    }
+
+    // 根据满足客人数量获取恶魔称谓
+    getDemonTitle(successCount) {
+        for (let i = 0; i < this.demonTitles.length; i++) {
+            const title = this.demonTitles[i];
+            if (successCount >= title.minSuccess && successCount <= title.maxSuccess) {
+                return title;
+            }
+        }
+        // 默认返回第一个称谓
+        return this.demonTitles[0];
     }
 
     resetMasks() {

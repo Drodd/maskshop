@@ -30,7 +30,7 @@
         <!-- 游戏标题和梗概 -->
         <div class="game-intro" id="game-intro">
             <h1 class="game-title">假面商店</h1>
-            <p class="game-description">为客人提供他们真正"需要"的假面，赐予他们“力量”吧</p>
+            <p class="game-description">为客人提供他们真正"需要"的假面，赐予他们"力量"吧</p>
         </div>
 
         <!-- 游戏主界面 -->
@@ -85,9 +85,16 @@
             <div class="result-backdrop"></div>
             <div class="result-content">
                 <h2 class="result-title">营业结束</h2>
+                
+                <!-- 称谓评价区域 -->
+                <div class="title-section">
+                    <div class="demon-title" id="demon-title">初级学徒</div>
+                    <div class="title-description" id="title-description">你还需要更多的经验来掌握假面的真正力量</div>
+                </div>
+                
                 <div class="result-stats">
                     <div class="stat-item primary">
-                        <span class="stat-label">正确处理</span>
+                        <span class="stat-label">满足了</span>
                         <span class="stat-value" id="success-count">0</span>
                         <span class="stat-unit">位客人</span>
                     </div>
@@ -96,12 +103,8 @@
                         <span class="stat-value" id="total-served">0</span>
                         <span class="stat-unit">位客人</span>
                     </div>
-                    <div class="stat-item accent">
-                        <span class="stat-label">正确率</span>
-                        <span class="stat-value" id="accuracy-rate">0%</span>
-                    </div>
                 </div>
-                <button id="restart-btn" class="restart-btn">重新开始</button>
+                <button id="restart-btn" class="restart-btn">下一天</button>
             </div>
         </div>
     </div>
