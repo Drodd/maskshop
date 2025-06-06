@@ -117,16 +117,18 @@ body {
 /* 前景图层 - 桌子 */
 .foreground-table {
     position: absolute;
-    bottom: 0;
     left: 50%;
-    transform: translateX(-50%);
+    bottom: 67%;
+    transform: translateX(-50%) translateY(50%);
     
     /* 计算桌子图片的尺寸以匹配背景图片的显示区域 */
     /* 背景图片: 1024x1536, 桌子图片: 1024x507 */
-    /* 在contain模式下，背景图片会基于容器的宽高比进行缩放 */
-    /* 我们让桌子图片的宽度匹配背景图片的实际显示宽度 */
     width: min(100vw, calc(100vh * 1024 / 1536));
     height: auto;
+    
+    /* 向下偏移，使桌子底部对齐到背景图片底部 */
+    /* 背景图片的实际高度 */
+    margin-bottom: calc(-1 * min(100vh, 100vw * 1536 / 1024) / 2);
     
     image-rendering: pixelated;
     image-rendering: -moz-crisp-edges;
