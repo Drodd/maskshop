@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>假面商店</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- 背景图片 -->
+        <div class="background-layer">
+            <img src="img/img_bg.png" alt="背景" class="bg-image">
+        </div>
+        
+        <!-- 进度条 (倒计时) -->
+        <div class="timer-progress-bar" id="timer-progress-bar" style="display: none;">
+            <div class="timer-progress-fill" id="timer-progress-fill"></div>
+            <div class="timer-text" id="timer-text">60s</div>
+        </div>
+        
+        <!-- 游戏状态栏 - 移除客人计数器 -->
+        <div class="game-status">
+            <!-- 倒计时显示 - 保留作为备用 -->
+            <div class="timer-display" id="timer-display" style="display: none;">
+                时间: <span id="timer">60</span>秒
+            </div>
+        </div>
+        
+        <!-- 游戏标题和梗概 -->
+        <div class="game-intro" id="game-intro">
+            <h1 class="game-title">假面商店</h1>
+            <p class="game-description">为客人提供他们真正"需要"的假面，在虚假的满足中获得商业成功</p>
+        </div>
+
+        <!-- 游戏主界面 -->
+        <div id="game-screen" class="game-screen">
+            <!-- 游戏场景区域 -->
+            <div class="game-scene">
+                <!-- 前景图层 - 桌子 -->
+                <div class="foreground-layer">
+                    <img src="img/img_table.png" alt="桌子" class="foreground-table">
+                </div>
+                
+                <!-- 人物图片 -->
+                <div class="character-container" style="display: none;">
+                    <img src="img/img_man.png" alt="人物" class="character-image">
+                    <!-- 面具放置区域 - 隐藏视觉效果 -->
+                    <div class="mask-drop-zone" id="mask-drop-zone"></div>
+                </div>
+                
+                <!-- 面具提示文字 -->
+                <div class="mask-hint" id="mask-hint">把面具拖拽到客人脸上</div>
+                
+                <!-- 面具选择区域 -->
+                <div class="masks-container" id="masks-container" style="display: none;">
+                    <div class="mask-item draggable" data-mask="love" draggable="true">
+                        <img src="img/img_mask_1.png" alt="爱之假面" class="mask-image">
+                        <div class="mask-label">爱慕假面</div>
+                    </div>
+                    <div class="mask-item draggable" data-mask="honor" draggable="true">
+                        <img src="img/img_mask_2.png" alt="荣誉假面" class="mask-image">
+                        <div class="mask-label">虚荣假面</div>
+                    </div>
+                    <div class="mask-item draggable" data-mask="control" draggable="true">
+                        <img src="img/img_mask_3.png" alt="控制假面" class="mask-image">
+                        <div class="mask-label">控制假面</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 对话区域 -->
+            <div class="dialogue-area">
+                <div class="speech-bubble" id="customer-speech">
+                    <p id="customer-dialogue">欢迎来到面具商店！点击开始游戏</p>
+                </div>
+            </div>
+
+            <!-- 开始游戏按钮 -->
+            <button id="start-btn" class="start-btn">开始游戏</button>
+        </div>
+
+        <!-- 结算界面 -->
+        <div id="result-screen" class="result-screen" style="display: none;">
+            <div class="result-backdrop"></div>
+            <div class="result-content">
+                <h2 class="result-title">营业结束</h2>
+                <div class="result-stats">
+                    <div class="stat-item primary">
+                        <span class="stat-label">正确处理</span>
+                        <span class="stat-value" id="success-count">0</span>
+                        <span class="stat-unit">位客人</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">总共接待</span>
+                        <span class="stat-value" id="total-served">0</span>
+                        <span class="stat-unit">位客人</span>
+                    </div>
+                    <div class="stat-item accent">
+                        <span class="stat-label">正确率</span>
+                        <span class="stat-value" id="accuracy-rate">0%</span>
+                    </div>
+                </div>
+                <button id="restart-btn" class="restart-btn">重新开始</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html> 

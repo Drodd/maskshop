@@ -1,0 +1,991 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    min-height: 100vh;
+    overflow: hidden;
+    -webkit-text-size-adjust: 100%;
+    background: #1a1a2e;
+}
+
+.game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 背景层 */
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* 游戏标题区域 - 隐藏标题，只显示计数器 */
+.game-header {
+    display: none;
+}
+
+/* 游戏状态栏 */
+.game-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 倒计时显示 */
+.timer-display {
+    background: #ff6b6b;
+    padding: 8px 16px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 0.8em;
+    border: 2px solid #ff4757;
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* 游戏主界面 */
+.game-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 游戏场景区域 */
+.game-scene {
+    position: relative;
+    flex: 1;
+    width: 100%;
+    height: 100%;
+}
+
+/* 人物容器 */
+.character-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -47%);
+    z-index: 2;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 前景图层容器 */
+.foreground-layer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* 前景图层 - 桌子 */
+.foreground-table {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100vw;
+    height: auto;
+    max-width: 100%;
+    object-fit: contain;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.character-image {
+    width: auto;
+    height: 45vh;
+    max-height: 400px;
+    min-height: 200px;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    z-index: 4;
+    position: relative;
+}
+
+/* 面具放置区域 - 完全隐藏 */
+.mask-drop-zone {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 80px;
+    /* 移除所有视觉样式，保持功能性 */
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4;
+    pointer-events: none; /* 不阻挡交互 */
+}
+
+.mask-drop-zone.drag-over {
+    /* 拖拽悬停时也不显示视觉反馈 */
+}
+
+.drop-hint {
+    display: none; /* 完全隐藏提示 */
+}
+
+/* 已选择面具在人物脸上的显示 */
+.face-mask {
+    position: absolute;
+    top: 17%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 106px; /* 面具放大10%：96px * 1.1 = 105.6px ≈ 106px */
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+    z-index: 5;
+}
+
+/* 爱慕假面 - 稍微偏上一些，因为这个面具主要覆盖眼部 */
+.face-mask-love {
+    top: 20%;
+    transform: translateX(-50%) translateY(0px) scale(1.1); /* 稍小一些，显得精致 */
+}
+
+/* 虚荣假面 - 标准位置，覆盖整个面部中心 */
+.face-mask-honor {
+    top: 15%;
+    transform: translateX(-50%) translateY(0px) scale(1); /* 稍大一些，显得华丽 */
+}
+
+/* 控制假面 - 稍微偏下一些，因为这个面具主要覆盖嘴部和下脸 */
+.face-mask-control {
+    top: 15%;
+    transform: translateX(-53%) translateY(0px) scale(1.1); /* 中等大小，显得威严 */
+}
+
+/* 对话区域 - 移动到人物头顶 */
+.dialogue-area {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -80%); /* 调整到人物头顶位置 */
+    width: 80%;
+    max-width: 350px;
+    z-index: 8;
+    transition: opacity 0.5s ease-in-out;
+    opacity: 0; /* 初始隐藏 */
+    visibility: hidden; /* 初始隐藏 */
+}
+
+/* 气泡入场动画 */
+.dialogue-area.bubble-enter {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: bubbleEnter 0.5s ease-out forwards;
+}
+
+/* 气泡消失动画 */
+.dialogue-area.bubble-exit {
+    animation: bubbleExit 0.3s ease-in forwards;
+}
+
+@keyframes bubbleEnter {
+    0% {
+        opacity: 0;
+        visibility: visible;
+        transform: translate(-50%, -80%) scale(0.8) translateY(20px);
+    }
+    60% {
+        opacity: 1;
+        transform: translate(-50%, -80%) scale(1.05) translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -80%) scale(1) translateY(0);
+    }
+}
+
+@keyframes bubbleExit {
+    0% {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -80%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate(-50%, -80%) scale(0.9);
+    }
+}
+
+/* 淡出动画 */
+.dialogue-area.fade-out {
+    opacity: 0;
+}
+
+/* 淡入动画 */
+.dialogue-area.fade-in {
+    opacity: 1;
+}
+
+.speech-bubble {
+    background: #2c2c54;
+    border: 3px solid #ffd93d;
+    border-radius: 20px;
+    padding: 18px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* 正确反馈时的气泡惊悚效果 */
+.speech-bubble.horror-bubble {
+    border: 3px solid #ff6b6b;
+    background: #1a0000;
+    animation: bubblePulse 1.5s ease-in-out;
+}
+
+@keyframes bubblePulse {
+    0%, 100% {
+        border-color: #ff6b6b;
+    }
+    50% {
+        border-color: #ff4757;
+    }
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    top: 100%; /* 改为指向下方 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #ffd93d; /* 箭头指向下方 */
+}
+
+.speech-bubble p {
+    margin: 0;
+    font-size: 1em;
+    line-height: 1.5;
+    color: white;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* 惊悚晃动效果 - 正确答案时的反馈 */
+.speech-bubble p.horror-effect {
+    animation: horrorShake 1.5s ease-in-out;
+    color: #ff6b6b;
+}
+
+@keyframes horrorShake {
+    0% {
+        transform: scale(1) rotate(0deg);
+        color: white;
+    }
+    10% {
+        transform: scale(1.2) rotate(-2deg);
+        color: #ff6b6b;
+    }
+    20% {
+        transform: scale(1.3) rotate(2deg);
+        color: #ff4757;
+    }
+    30% {
+        transform: scale(1.25) rotate(-1deg);
+        color: #ff6b6b;
+    }
+    40% {
+        transform: scale(1.35) rotate(1.5deg);
+        color: #ff3742;
+    }
+    50% {
+        transform: scale(1.4) rotate(-1deg);
+        color: #ff6b6b;
+    }
+    60% {
+        transform: scale(1.3) rotate(1deg);
+        color: #ff4757;
+    }
+    70% {
+        transform: scale(1.2) rotate(-0.5deg);
+        color: #ff6b6b;
+    }
+    80% {
+        transform: scale(1.1) rotate(0.5deg);
+        color: #ff5722;
+    }
+    90% {
+        transform: scale(1.05) rotate(-0.2deg);
+        color: #ff6b6b;
+    }
+    100% {
+        transform: scale(1) rotate(0deg);
+        color: #ff6b6b;
+    }
+}
+
+/* 按钮样式 */
+.start-btn, .next-btn, .restart-btn {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ff6b6b;
+    color: white;
+    border: 3px solid #ff4757;
+    border-radius: 25px;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.start-btn:hover, .next-btn:hover, .restart-btn:hover {
+    background: #ff4757;
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.start-btn:active, .next-btn:active, .restart-btn:active {
+    background: #ff3742;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* 结算界面 */
+.result-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.result-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    animation: backdropFadeIn 0.5s ease-out;
+}
+
+@keyframes backdropFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.result-content {
+    position: relative;
+    text-align: center;
+    background: rgba(44, 62, 80, 0.95);
+    padding: 30px 20px 80px 20px;
+    border-radius: 15px;
+    border: 2px solid #f39c12;
+    width: 100%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: resultSlideIn 0.6s ease-out 0.2s both;
+}
+
+@keyframes resultSlideIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.result-title {
+    color: #f39c12;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.result-stats {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-item {
+    background: rgba(52, 73, 94, 0.8);
+    border: 2px solid #34495e;
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(52, 73, 94, 1);
+    transform: translateY(-1px);
+}
+
+.stat-item.primary {
+    border-color: #f39c12;
+    background: rgba(243, 156, 18, 0.1);
+}
+
+.stat-item.primary:hover {
+    background: rgba(243, 156, 18, 0.2);
+}
+
+.stat-item.accent {
+    border-color: #34495e;
+    background: rgba(52, 73, 94, 0.8);
+}
+
+.stat-item.accent:hover {
+    background: rgba(52, 73, 94, 1);
+}
+
+.stat-label {
+    font-size: 1em;
+    color: #ecf0f1;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #f39c12;
+    margin: 0 8px;
+}
+
+.stat-unit {
+    font-size: 0.9em;
+    color: #bdc3c7;
+}
+
+/* 重新开始按钮 */
+.restart-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #f39c12;
+    color: white;
+    border: 2px solid #e67e22;
+    border-radius: 25px;
+    padding: 12px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 9;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.restart-btn:hover {
+    background: #e67e22;
+    transform: translateX(-50%) translateY(-2px);
+}
+
+.restart-btn:active {
+    background: #d35400;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* 响应式设计 - 针对首页和结算弹窗 */
+@media (max-width: 480px) {
+    .game-status {
+        top: 15px;
+        right: 15px;
+        gap: 8px;
+    }
+    
+    .timer-display {
+        font-size: 0.8em;
+        padding: 6px 12px;
+    }
+    
+    .character-image {
+        height: 35vh;
+        min-height: 150px;
+    }
+    
+    .masks-container {
+        bottom: 20px;
+        gap: 30px;
+        padding: 15px;
+    }
+    
+    .mask-image {
+        width: 84px;
+    }
+    
+    .mask-item {
+        width: 108px;
+    }
+    
+    .mask-item:nth-child(1) {
+        top: -10px;
+    }
+
+    .mask-item:nth-child(2) {
+        top: 8px;
+    }
+
+    .mask-item:nth-child(3) {
+        top: -10px;
+    }
+    
+    .mask-hint {
+        bottom: 160px;
+    }
+    
+    .dialogue-area {
+        width: 90%;
+        max-width: 300px;
+        transform: translate(-50%, -90%);
+    }
+    
+    .speech-bubble {
+        padding: 15px;
+    }
+    
+    .speech-bubble p {
+        font-size: 0.9em;
+    }
+    
+    .timer-text {
+        right: 15px;
+        top: 10px;
+    }
+    
+    .game-intro {
+        width: 95%;
+        max-width: none;
+    }
+    
+    .game-title {
+        font-size: 2em;
+        margin-bottom: 15px;
+    }
+    
+    .game-description {
+        font-size: 1em;
+        padding: 15px;
+    }
+    
+    .result-screen {
+        padding: 15px;
+    }
+    
+    .result-content {
+        padding: 25px 15px 70px 15px;
+        max-width: none;
+        width: 100%;
+    }
+    
+    .result-title {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+    
+    .stat-item {
+        padding: 12px;
+        flex-direction: column;
+        text-align: center;
+        gap: 5px;
+    }
+    
+    .stat-value {
+        margin: 0;
+        font-size: 1.3em;
+    }
+    
+    .stat-label,
+    .stat-unit {
+        font-size: 0.9em;
+    }
+    
+    .restart-btn {
+        padding: 10px 25px;
+        font-size: 0.9em;
+        bottom: 15px;
+    }
+}
+
+@media (max-height: 600px) {
+    .character-image {
+        height: 30vh;
+        min-height: 120px;
+    }
+    
+    .masks-container {
+        bottom: 20px;
+    }
+    
+    .dialogue-area {
+        transform: translate(-50%, -70%);
+    }
+    
+    .mask-hint {
+        bottom: 140px;
+    }
+    
+    .mask-item:nth-child(1) {
+        top: -8px;
+    }
+
+    .mask-item:nth-child(2) {
+        top: 5px;
+    }
+
+    .mask-item:nth-child(3) {
+        top: -8px;
+    }
+    
+    .game-intro {
+        top: 45%;
+    }
+    
+    .game-title {
+        font-size: 1.8em;
+        margin-bottom: 10px;
+    }
+    
+    .game-description {
+        font-size: 0.95em;
+        padding: 15px;
+    }
+    
+    .result-content {
+        padding: 20px 15px 65px 15px;
+        max-height: 85vh;
+    }
+    
+    .result-title {
+        font-size: 1.4em;
+        margin-bottom: 15px;
+    }
+    
+    .stat-item {
+        padding: 10px;
+    }
+    
+    .stat-value {
+        font-size: 1.2em;
+    }
+    
+    .restart-btn {
+        padding: 8px 20px;
+        font-size: 0.85em;
+        bottom: 10px;
+    }
+}
+
+/* 拖拽相关样式 */
+.draggable {
+    touch-action: none;
+}
+
+.drag-clone {
+    position: fixed;
+    pointer-events: none;
+    z-index: 1000;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+/* 隐藏类 */
+.hidden {
+    display: none !important;
+}
+
+/* 防止文本选择 */
+.mask-item, .start-btn, .next-btn, .restart-btn {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* 面具容器 - 移除背景框，放大尺寸，移动到更靠近底部 */
+.masks-container {
+    position: absolute;
+    bottom: 20px; /* 更靠近屏幕底部 */
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 40px; /* 增大间距 */
+    z-index: 6;
+    padding: 20px;
+    /* 移除背景和边框 */
+    background: transparent;
+    border-radius: 0;
+}
+
+/* 面具提示文字 */
+.mask-hint {
+    position: absolute;
+    bottom: 180px; /* 调整到面具上方 */
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ffd93d;
+    font-size: 0.9em;
+    text-align: center;
+    z-index: 7;
+    display: none;
+}
+
+.mask-hint.show {
+    display: block;
+}
+
+.mask-item {
+    position: relative;
+    cursor: grab;
+    transition: all 0.3s ease;
+    text-align: center;
+    padding: 10px;
+    /* 移除背景框 */
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    
+    /* 保持固定宽度防止位移，增大尺寸 */
+    width: 120px; /* 从100px增大到120px以适应更大的面具 */
+    flex-shrink: 0;
+}
+
+/* 第一个面具（爱之假面）- 位置较高 */
+.mask-item:nth-child(1) {
+    top: -15px;
+}
+
+/* 第二个面具（荣誉假面）- 位置较低 */
+.mask-item:nth-child(2) {
+    top: 10px;
+}
+
+/* 第三个面具（自由假面）- 位置较高 */
+.mask-item:nth-child(3) {
+    top: -15px;
+}
+
+.mask-item:hover {
+    transform: scale(1.05);
+    /* 移除背景变化 */
+}
+
+.mask-item:active {
+    cursor: grabbing;
+    transform: scale(0.95);
+}
+
+.mask-item.dragging {
+    opacity: 0.5; /* 降低不透明度显示正在拖拽 */
+    transform: scale(0.9);
+    z-index: 1000;
+    /* 保持在原位置，不影响其他面具 */
+    visibility: hidden;
+}
+
+.mask-item.hidden {
+    /* 用 visibility 而不是 opacity 来避免布局变化 */
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.mask-image {
+    width: 96px; /* 从80px放大20%到96px */
+    height: auto;
+    image-rendering: pixelated;
+    image-rendering: -moz-crisp-edges;
+    image-rendering: crisp-edges;
+}
+
+.mask-label {
+    margin-top: 8px;
+    font-size: 0.8em;
+    color: #ffd93d;
+    font-weight: bold;
+}
+
+/* 人物淡出动画 */
+.character-container.fade-out {
+    opacity: 0;
+}
+
+/* 人物淡入动画 */
+.character-container.fade-in {
+    opacity: 1;
+}
+
+/* 人物入场走路动画 */
+.character-container.walk-in {
+    animation: walkEnter 1s ease-out forwards;
+}
+
+@keyframes walkEnter {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -47%) translateY(20px);
+    }
+    25% {
+        opacity: 0.5;
+        transform: translate(-50%, -47%) translateY(-5px);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translate(-50%, -47%) translateY(10px);
+    }
+    75% {
+        opacity: 1;
+        transform: translate(-50%, -47%) translateY(-3px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -47%) translateY(0px);
+    }
+}
+
+/* 持续的轻微走路效果 */
+.character-container.walking {
+    animation: walkLoop 2s ease-in-out infinite;
+}
+
+@keyframes walkLoop {
+    0%, 100% {
+        transform: translate(-50%, -47%) translateY(0px);
+    }
+    50% {
+        transform: translate(-50%, -47%) translateY(-8px);
+    }
+}
+
+/* 进度条样式 */
+.timer-progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 6px;
+    background: #2c2c54;
+    z-index: 100;
+}
+
+.timer-progress-fill {
+    height: 100%;
+    background: #ffd93d;
+    transition: width 0.1s linear;
+}
+
+.timer-text {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    color: white;
+    font-size: 0.8em;
+    font-weight: bold;
+    z-index: 101;
+}
+
+/* 游戏介绍界面 */
+.game-intro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    width: 90%;
+    max-width: 400px;
+    animation: introFadeIn 1s ease-out;
+}
+
+.game-title {
+    font-size: 2.5em;
+    color: #07133f;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.game-description {
+    font-size: 1.1em;
+    color: #ecf0f1;
+    line-height: 1.6;
+    background: rgba(44, 62, 80, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #f39c12;
+    margin: 0 auto;
+}
+
+@keyframes introFadeIn {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.9) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) translateY(0);
+    }
+}
+
+/* 隐藏游戏介绍时的样式 */
+.game-intro.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -50%) scale(0.95);
+    transition: all 0.5s ease-in-out;
+} 
