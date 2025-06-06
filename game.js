@@ -80,7 +80,7 @@ class MaskSellerGame {
                 flaw: "过度依赖他人的认可来获得安全感，害怕被抛弃，缺乏情感边界",
                 entrance: "公司最近在裁员，我总觉得下一个就是我...", // 基于need（情感独立）的恐惧
                 correctMask: "love",
-                positiveResponse: "我要成为老板的女婿！", // 基于want（职业保障）的沉醉
+                positiveResponse: "我要成为老板的心腹！", // 基于want（职业保障）的沉醉
                 negativeResponse: "这个...不能给我工作保障..."
             },
             {
@@ -110,7 +110,7 @@ class MaskSellerGame {
                 flaw: "用外在成就来证明自己的价值，内心深度自卑，害怕失败",
                 entrance: "为什么老板给他的朋友圈点赞，却从来不理我...", // 基于need（内在价值）的痛苦
                 correctMask: "honor",
-                positiveResponse: "我要成为最佳员工！", // 基于want（外在成就）的陶醉
+                positiveResponse: "我要住在公司！", // 基于want（外在成就）的陶醉
                 negativeResponse: "这个面具...似乎不能提升我的成就..."
             },
             {
@@ -170,7 +170,7 @@ class MaskSellerGame {
                 flaw: "活在虚假的完美形象中，害怕真实的自己被发现，过度在意面子",
                 entrance: "上次直播忘开美颜了，我的粉丝正在流失...", // 基于need（真实接纳）的疲惫
                 correctMask: "honor",
-                positiveResponse: "我要获得最美容颜！", // 基于want（完美形象）的满足
+                positiveResponse: "我要去韩国整容！", // 基于want（完美形象）的满足
                 negativeResponse: "这个面具...好像不能让我更完美..."
             },
             {
@@ -200,7 +200,7 @@ class MaskSellerGame {
                 flaw: "活在虚假的完美形象中，害怕真实的自己被发现，过度在意面子",
                 entrance: "下属们背后议论我不够专业...", // 基于need（真实接纳）的疲惫
                 correctMask: "honor",
-                positiveResponse: "我要发表学术论文！", // 基于want（管理威严）的满足
+                positiveResponse: "我要出书！", // 基于want（管理威严）的满足
                 negativeResponse: "这个面具...好像不能让我更权威..."
             },
             {
