@@ -349,11 +349,56 @@ class MaskSellerGame {
             characterImage: document.querySelector('.character-image')
         };
         
+        // 预加载所有人物图片
+        this.preloadCharacterImages();
+        
         // 绑定事件
         this.bindEvents();
         
         // 初始化界面
         this.updateUI();
+    }
+    
+    // 预加载所有人物图片
+    preloadCharacterImages() {
+        // 获取所有唯一的人物图片路径
+        const uniqueImagePaths = [...new Set(this.customers.map(customer => customer.character_image))];
+        
+        // 创建预加载容器，放在屏幕外
+        const preloadContainer = document.createElement('div');
+        preloadContainer.style.position = 'absolute';
+        preloadContainer.style.left = '-9999px';
+        preloadContainer.style.top = '-9999px';
+        preloadContainer.style.width = '1px';
+        preloadContainer.style.height = '1px';
+        preloadContainer.style.overflow = 'hidden';
+        preloadContainer.style.visibility = 'hidden';
+        preloadContainer.id = 'character-preload-container';
+        
+        // 为每个唯一图片创建预加载的img元素
+        uniqueImagePaths.forEach((imagePath, index) => {
+            const img = document.createElement('img');
+            img.src = imagePath;
+            img.alt = `预加载图片${index + 1}`;
+            img.style.width = '1px';
+            img.style.height = '1px';
+            
+            // 添加加载完成的监听器（可选，用于调试）
+            img.onload = () => {
+                console.log(`人物图片预加载完成: ${imagePath}`);
+            };
+            
+            img.onerror = () => {
+                console.warn(`人物图片预加载失败: ${imagePath}`);
+            };
+            
+            preloadContainer.appendChild(img);
+        });
+        
+        // 将预加载容器添加到页面
+        document.body.appendChild(preloadContainer);
+        
+        console.log(`开始预加载 ${uniqueImagePaths.length} 个人物图片...`);
     }
     
     bindEvents() {

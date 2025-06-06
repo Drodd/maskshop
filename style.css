@@ -375,12 +375,12 @@ body {
 /* 按钮样式 */
 .start-btn, .next-btn, .restart-btn {
     position: absolute;
-    bottom: 30px;
+    bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
-    background: #ff6b6b;
+    background: #eea91e;
     color: white;
-    border: 3px solid #ff4757;
+    border: 3px solid #ffd93d;
     border-radius: 25px;
     padding: 15px 30px;
     font-size: 1.1em;
@@ -778,7 +778,7 @@ body {
     }
     
     .game-intro {
-        top: 45%;
+        top: 25%; /* 从45%上移20%到25% */
     }
     
     .game-title {
@@ -1068,7 +1068,7 @@ body {
 /* 游戏介绍界面 */
 .game-intro {
     position: absolute;
-    top: 50%;
+    top: 30%; /* 从50%上移20%到30% */
     left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
